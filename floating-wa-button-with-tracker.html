@@ -1,135 +1,115 @@
+<!-- Floating WA button -->
 <div class="textwidget">
-    <style>
-        .socmed:hover {
-            transition: 0.6s;
-            transform: scale(1.2, 1.2);
-        }
+  <style>
+    .socmed:hover {
+      transition: 0.6s;
+      transform: scale(1.2, 1.2);
+    }
 
-        .chat {
-            position: fixed;
-            bottom: 62px;
-            right: 15px;
-        }
+    .chat {
+      /* ###TODO: adjust desktop floating position */
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+    }
 
-        .chat-mobile {
-            position: fixed;
-            bottom: 65px;
-            right: 8px;
-        }
-      
-      	@media (max-width: 736px) {
-          .hidden-mobile {
-            display: none;
-          }
-        }
-      
-      	@media (min-width: 737px) {
-          .hidden-pc {
-            display: none;
-          }
-        }
-    </style>
-    <a href="https://wa.me/6282122156745" target="_blank" title="Chat with Us" onclick="track_control(WA_6282122156745); return false;">
-        <img class="chat-mobile socmed hidden-mobile wa_contact" style="width:180px;z-index:9999;" src="http://redir.pakar.co.id/chat-WA3.png">
-    </a>
-    <a href="https://wa.me/6282122156745" target="_blank" title="Chat with Us" onclick="track_control(WA_6282122156745); return false;">
-        <img class="chat-mobile socmed hidden-pc wa_contact" style="width:140px;z-index:9999;" src="http://redir.pakar.co.id/chat-WA3.png">
-    </a>
+    .chat-mobile {
+      /* ###TODO: adjust mobile floating position */
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+    }
+
+    @media (max-width: 736px) {
+      .hidden-mobile {
+        display: none;
+      }
+    }
+
+    @media (min-width: 737px) {
+      .hidden-pc {
+        display: none;
+      }
+    }
+  </style>
+  <!-- ###TODO: change 628123456789 ***everywhere*** -->
+  <!-- ###TODO: change WA icon img src in these two <a> elements-->
+  <a href="https://wa.me/628123456789" target="_blank" title="Chat with Us"
+    onclick="track_control(wa_628123456789); return false;">
+    <img class="chat-mobile socmed hidden-mobile wa_contact" style="width:180px;z-index:9999;"
+      src="./images/chat-WA3.png">
+  </a>
+  <a href="https://wa.me/628123456789" target="_blank" title="Chat with Us"
+    onclick="track_control(wa_628123456789); return false;">
+    <img class="chat-mobile socmed hidden-pc wa_contact" style="width:140px;z-index:9999;" src="./images/chat-WA3.png">
+  </a>
 </div>
 
+<!-- outbound link tracker -->
 <script>
-    GA_TRACK = "GA only";
-    FB_TRACK = "FB only";
-    GA_FB_TRACK = "GA and FB";
-
-    // ga_type choice
-    GA_TYPE_GTAG = "gtag";
-    GA_TYPE_GA = "ga";
-
-    // open_type choice
-    OPEN_IN_NEW_TAB = "open link in a new tab";
-    OPEN_IN_SAME_TAB = "open link in the same tab";
-
-    /**
-      * Look variable names above
-      */
-    track_type = GA_TRACK;
-    ga_type = GA_TYPE_GTAG;
-    open_type = OPEN_IN_NEW_TAB;
-    /**
-      * Good practice: fill all parameters as if there's GA & FB tracking
-      * Every param can be filled with anything except if you want to use
-      * FB Pixel Standard Events.
-      */
-    var WA_6282122156745 = {
-        /**
-          * EXAMPLE
-          * By ID:
-          *   selector: "#<element's ID here>",
-          * By HREF:
-          *   selector: "a[href='<anchor's href here>']",
-          */
-        ga_e_category: "WA 6282122156745",
-        ga_e_action: "click",
-        ga_e_label: "WA 6282122156745 click",
-
-        fb_event: "Lead", // FB standard events here
-        fb_name: "Outbound link 1 click",
-        fb_category: "Outbound link 1",
-        // Copy "selector" value above into jQuery()
-        url: jQuery(".wa_contact").first().attr("href")
+  /**
+    * Good practice: fill all parameters as if there's GA & FB tracking
+    * Every param can be filled with anything except if you want to use
+    * FB Pixel Standard Events.
+    */
+  // ###TODO: change var name & labels as needed
+  var wa_628123456789 = {
+    ga_e_category: "wa_628123456789 click",
+    ga_e_action: "wa_628123456789 click",
+    ga_e_label: "wa_628123456789 click",
+    fb_event: "Lead", // ###TODO: choose FB standard events here, e.g. "Lead"
+    fb_name: "wa_628123456789 click",
+    fb_category: "wa_628123456789 click",
+    url: "https://wa.me/628123456789",
+  }
+  // Do not modify the code below at all without permission.
+  function track_control(e) {
+    console.log("Looking for Google Analytics tracker: gtag or ga?")
+    if (typeof gtag !== 'undefined') {
+      console.log("Gtag tracker found, tracking outbound link...")
+      gtag("event", e.ga_e_action, {
+        "event_category": e.ga_e_category,
+        "event_label": e.ga_e_label,
+        "transport_type": "beacon",
+        "event_callback": fb_or_link(e)
+      });
+    } else if (typeof ga !== 'undefined') {
+      console.log("GA tracker found, tracking outbound link...")
+      ga("send", "event", e.ga_e_category,
+        e.ga_e_action, e.ga_e_label, {
+          "transport_type": "beacon",
+          "event_callback": fb_or_link(e)
+        });
+    } else {
+      console.log("No Google Analytics tracking found!")
+      fb_or_link(e);
     }
-
-    // Do not modify the code below at all without permission.
-    function track_control(e) {
-        console.log("You choose to track with ".concat(track_type, "."));
-        if (track_type == FB_TRACK) {
-            fb_track(e);
-        } else {
-            ga_track(e);
-        }
+  }
+  function fb_or_link(e) {
+    console.log("Checking FB Pixel presence...")
+    if (typeof fbq !== 'undefined') {
+      console.log("FB Pixel found! Tracking...")
+      fb_track(e);
+    } else {
+      console.log("FB Pixel not found! Open link right away.")
+      outbound_link(e);
     }
-    function ga_track(e) {
-        console.log("Preparing GA tracker.");
-        console.log("GA tracker: ".concat(ga_type, "."));
-        if (ga_type == GA_TYPE_GTAG) {
-            gtag("event", e.ga_e_action, {
-                "event_category": e.ga_e_category,
-                "event_label": e.ga_e_label,
-                "transport_type": "beacon",
-                "event_callback": fb_or_link(e)
-            });
-        } else {
-            ga("send", "event", e.ga_e_category,
-                e.ga_e_action, e.ga_e_label, {
-                    "transport_type": "beacon",
-                    "event_callback": fb_or_link(e)
-                }
-            );
-        }
+  }
+  function fb_track(e) {
+    console.log("Preparing FB tracker.");
+    if (typeof fbq("track", e.fb_event,
+      {
+        content_name: e.fb_name,
+        content_category: e.fb_category
+      }
+    ) === 'undefined') outbound_link(e);
+  }
+  function outbound_link(e) {
+    console.log("Redirecting to new link.");
+    if (jQuery(e.selector).attr("target") == "_blank") {
+      window.open(e.url);
+    } else {
+      document.location = e.url;
     }
-    function fb_track(e) {
-        console.log("Preparing FB tracker.");
-        if (typeof fbq("track", e.fb_event,
-            {
-                content_name: e.fb_name,
-                content_category: e.fb_category
-            }
-        ) === 'undefined') outbound_link(e);
-    }
-    function fb_or_link(e) {
-        if (track_type == GA_FB_TRACK) {
-            fb_track(e);
-        } else {
-            outbound_link(e);
-        }
-    }
-    function outbound_link(e) {
-        console.log("Redirecting to new link.");
-        if (open_type == OPEN_IN_NEW_TAB) {
-            window.open(e.url);
-        } else {
-            document.location = e.url;
-        }
-    }
+  }
 </script>
