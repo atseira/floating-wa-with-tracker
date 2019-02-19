@@ -33,6 +33,7 @@
     }
   </style>
   <!-- ###TODO: change 628123456789 ***everywhere*** -->
+  <!-- ###TODO: change url as needed, therea are 3 urls need to be changed-->
   <!-- ###TODO: change WA icon img src in these two <a> elements-->
   <a href="https://wa.me/628123456789" target="_blank" title="Chat with Us"
     onclick="track_control(wa_628123456789); return false;">
@@ -62,7 +63,7 @@
     fb_category: "wa_628123456789 click",
     url: "https://wa.me/628123456789",
   }
-  // Do not modify the code below at all without permission.
+  // Be careful on modifying the code below.
   function track_control(e) {
     console.log("Looking for Google Analytics tracker: gtag or ga?")
     if (typeof gtag !== 'undefined') {
@@ -106,10 +107,8 @@
   }
   function outbound_link(e) {
     console.log("Redirecting to new link.");
-    if (jQuery(e.selector).attr("target") == "_blank") {
-      window.open(e.url);
-    } else {
-      document.location = e.url;
-    }
+    window.open(e.url);
+    // Use document.location to open link in same tab
+    // document.location = e.url;
   }
 </script>
