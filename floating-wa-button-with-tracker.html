@@ -37,24 +37,24 @@
   <!-- ###TODO: change WA icon img src in these two <a> elements-->
   <a href="https://wa.me/628123456789" target="_blank" title="Chat with Us"
     onclick="track_control(wa_628123456789); return false;">
-    <img class="chat-mobile socmed hidden-mobile" style="width:180px;z-index:9999;" src="./images/chat-WA3.png">
+    <img class="chat-mobile socmed hidden-mobile" style="width:180px;z-index:9999;" src="/images/chat-WA3.png">
   </a>
   <a href="https://wa.me/628123456789" target="_blank" title="Chat with Us"
     onclick="track_control(wa_628123456789); return false;">
-    <img class="chat-mobile socmed hidden-pc" style="width:140px;z-index:9999;" src="./images/chat-WA3.png">
+    <img class="chat-mobile socmed hidden-pc" style="width:140px;z-index:9999;" src="/images/chat-WA3.png">
   </a>
 </div>
 
 <!-- outbound link tracker -->
 <script>
   var wa_628123456789 = {
-    selector: "a[href^='https://wa.me/6281234567890']",
+    selector: "a[href^='https://wa.me/628123456789']",
     fb_event: "Lead",
-    fb_name: "floating_wa_6281234567890",
+    fb_name: "floating_wa_628123456789",
     fb_category: "wa_click",
     ga_e_category: "wa_click",
     ga_e_action: "wa_click",
-    ga_e_label: "floating_wa_6281234567890",
+    ga_e_label: "floating_wa_628123456789",
   }
 
   function track_control(e) {
